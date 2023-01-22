@@ -1,11 +1,12 @@
 package com.sas.filedownload.utils;
 
 import com.sas.filedownload.response.EmployeeResponse;
+import org.springframework.stereotype.Component;
 
 import java.io.PrintWriter;
 import java.util.List;
 
-public class CsvUtils {
+public class CsvExporter {
 
     public static void downloadCsv(PrintWriter writer, List<EmployeeResponse> employees) {
         writer.write("Emp Id,First Name,Last Name,Email,Mobile,Designation \n");
