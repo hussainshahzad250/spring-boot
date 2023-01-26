@@ -6,5 +6,9 @@ public interface RootService {
 
     String getClientIp(HttpServletRequest request);
 
-    public String getBaseUrl(HttpServletRequest request);
+    String getBaseUrl(HttpServletRequest request);
+
+    String getLocalHostName();
+
+    String getLocalHostIPAddress();
 }

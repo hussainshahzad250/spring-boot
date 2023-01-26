@@ -5,6 +5,11 @@
 </head>
 <body>
 <h1>Your IP Address: <span th:text="${clientIp}"></span></h1>
-<a href="/getBaseUrl">Know your Base URL</a>
+<h1>HostName: <span th:text="${hostName}"></span></h1>
+<h1>Host IP: <span th:text="${hostIP}"></span></h1>
+<form action="/", method="post">
+    <button>Know your Base URL</button>
+</form>
+<span th:text="${baseUrl}"></span>
 </body>
 </html>

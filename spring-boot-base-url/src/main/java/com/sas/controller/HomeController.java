@@ -19,6 +19,8 @@ public class HomeController {
         ModelAndView model = new ModelAndView("index");
         String clientIp = rootService.getClientIp(request);
         model.addObject("clientIp", clientIp);
+        model.addObject("hostName", rootService.getLocalHostName());
+        model.addObject("hostIP", rootService.getLocalHostIPAddress());
         return model;
     }
 

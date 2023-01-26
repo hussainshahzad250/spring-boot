@@ -54,4 +54,25 @@ public class RootServiceImpl implements RootService {
                 .build()
                 .toUriString();
     }
+
+    @Override
+    public String getLocalHostName() {
+        String localhostMName = null;
+        try {
+            localhostMName = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return localhostMName;
+    }
+
+    public String getLocalHostIPAddress() {
+        String localhostIP = null;
+        try {
+            localhostIP = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return localhostIP;
+    }
 }
