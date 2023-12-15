@@ -33,8 +33,8 @@ public class QRCodeController {
         return "show-qr-code";
     }
 
-    @GetMapping("/generateQRCode")
-    public void generateQRCode(String qrContent, HttpServletResponse response) throws IOException {
+    @PostMapping("/generateQRCode")
+    public void generateQRCode(@RequestParam String qrContent, HttpServletResponse response) throws IOException {
         response.setContentType("image/png");
         byte[] qrCode = qrCodeService.generateQRCode(qrContent, 500, 500);
         OutputStream outputStream = response.getOutputStream();
