@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class QRCodeController {
     @Autowired
     private QRCodeService qrCodeService;
 
-    @RequestMapping("/")
+    @RequestMapping({"/","/generateQRCode"})
     public String index() {
         return "index";
     }
@@ -33,10 +32,18 @@ public class QRCodeController {
         return "show-qr-code";
     }
 
-    @PostMapping("/generateQRCode")
-    public void generateQRCode(@RequestParam String qrContent, HttpServletResponse response) throws IOException {
+    @GetMapping("/generateQRCode")
+    public void generateQRCode(String qrContent, HttpServletResponse response) throws IOException {
         response.setContentType("image/png");
         byte[] qrCode = qrCodeService.generateQRCode(qrContent, 500, 500);
+        OutputStream outputStream = response.getOutputStream();
+        outputStream.write(qrCode);
+    }
+
+    @PostMapping("/generateQR")
+    public void generateQR(@RequestParam String qrString, HttpServletResponse response) throws IOException {
+        response.setContentType("image/png");
+        byte[] qrCode = qrCodeService.generateQRCode(qrString, 500, 500);
         OutputStream outputStream = response.getOutputStream();
         outputStream.write(qrCode);
     }

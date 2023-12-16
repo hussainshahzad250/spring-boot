@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -59,6 +60,26 @@ public class QRCodeServiceImpl implements QRCodeService {
             return qrCodeText;
         } catch (IOException | NotFoundException ex) {
             log.error("Error during reading QR code image", ex);
+        }
+        return null;
+    }
+
+    @Override
+    public String decodeQR(byte[] qrCodeBytes) {
+        try {
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(qrCodeBytes);
+            BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
+            BufferedImageLuminanceSource bufferedImageLuminanceSource = new BufferedImageLuminanceSource(bufferedImage);
+            HybridBinarizer hybridBinarizer = new HybridBinarizer(bufferedImageLuminanceSource);
+            BinaryBitmap binaryBitmap = new BinaryBitmap(hybridBinarizer);
+            MultiFormatReader multiFormatReader = new MultiFormatReader();
+            Result result = multiFormatReader.decode(binaryBitmap);
+
+            return result.getText();
+        } catch (NotFoundException e) {
+            log.error(e.getMessage(), e);
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
         }
         return null;
     }
